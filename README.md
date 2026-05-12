@@ -28,6 +28,14 @@ of the forensic examiners and investigators who need it most.
 
 ---
 
+## Acknowledgments
+
+ABBY exists because of the investigators who do this work in the real world — often without recognition, often at personal cost.
+
+Special thanks to **Anthony Kava**, Cyber Investigator with the **Pottawattamie County Sheriff's Office**, for his work protecting the community from predators. The mission of this tool is built on the shoulders of people like him.
+
+---
+
 ## Overview
 
 ABBY is an open-source machine learning model fine-tuned to assist law enforcement forensic
