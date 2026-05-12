@@ -41,8 +41,9 @@ to the science, to the standard, and to the chain of custody.
 
 ### The Ronin 48 Forensic Suite
 
-ABBY is the third model in a balanced, three-part system designed to serve every phase of the
-criminal justice process — from the crime scene to the courtroom.
+ABBY is where cases are made or broken. [SELMA](https://codeberg.org/Ronin48/SELMA) identifies
+the charges. [ATTICUS](https://codeberg.org/Ronin48/ATTICUS) builds the defense. ABBY is why
+either of them has anything to argue about.
 
 | | SELMA | ABBY | ATTICUS |
 |---|---|---|---|
