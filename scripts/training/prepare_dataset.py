@@ -3,18 +3,28 @@
 Prepare ABBY training dataset from collected raw data.
 
 Combines NIST standards, digital statutes, forensic case law,
-CSAM investigation methodology, and synthetic examples into
-chat-format JSONL for QLoRA fine-tuning.
+CSAM investigation methodology, research papers, and synthetic examples
+into chat-format JSONL for QLoRA fine-tuning.
+
+Run from the ABBY repository root:
+    python scripts/training/prepare_dataset.py
 """
 
 import json
 import random
+import sys
 from pathlib import Path
+
+# Allow running from repo root or scripts/training/
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(REPO_ROOT / "scripts" / "training"))
+sys.path.insert(0, str(REPO_ROOT / "src" / "abby"))
 
 from abby_system_prompt import SYSTEM_PROMPT
 
-RAW_DIR = Path("data/raw")
-OUT_DIR = Path("data/processed")
+RAW_DIR = REPO_ROOT / "data" / "raw"
+SYNTHETIC_DIR = REPO_ROOT / "data" / "synthetic"
+OUT_DIR = REPO_ROOT / "data" / "processed"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 EVAL_RATIO = 0.05
@@ -159,6 +169,47 @@ def load_caselaw_snippets():
     return examples
 
 
+def load_research_papers():
+    examples = []
+    paper_files = [
+        RAW_DIR / "research_papers" / "arxiv_forensics.jsonl",
+        RAW_DIR / "research_papers" / "pubmed_forensics.jsonl",
+    ]
+    for path in paper_files:
+        if not path.exists():
+            continue
+        with open(path) as f:
+            for line in f:
+                r = json.loads(line)
+                title = r.get("title", "").strip()
+                abstract = (r.get("abstract") or r.get("summary") or "").strip()
+                source = r.get("source", "research")
+                if not title or not abstract or len(abstract) < 100:
+                    continue
+                user = f"Summarize the forensic significance of this research: {title}"
+                assistant = (
+                    f"**{title}**\n\n"
+                    f"**Summary:** {abstract}\n\n"
+                    f"*Source: {source}*"
+                )
+                examples.append(make_example(user, assistant))
+
+    print(f"  Research papers: {len(examples)} examples")
+    return examples
+
+
+def load_synthetic():
+    examples = []
+    for path in SYNTHETIC_DIR.glob("*.jsonl"):
+        with open(path) as f:
+            for line in f:
+                r = json.loads(line)
+                if "messages" in r:
+                    examples.append(r)
+    print(f"  Synthetic examples: {len(examples)} examples")
+    return examples
+
+
 def split_and_save(examples: list):
     random.seed(SEED)
     random.shuffle(examples)
@@ -188,6 +239,8 @@ if __name__ == "__main__":
     examples += load_csam_methodology()
     examples += load_landmark_cases()
     examples += load_caselaw_snippets()
+    examples += load_research_papers()
+    examples += load_synthetic()
 
     print(f"\nTotal: {len(examples)} examples")
     split_and_save(examples)
