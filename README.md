@@ -1,4 +1,4 @@
-# ABBY — Automated Bioforensic, Behavioral, and Yield Analysis
+# ABBY — Artifact, Ballistic, and Binary Yield
 
 **An Open-Source Model Trained for Law Enforcement Forensic Investigators**
 

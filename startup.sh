@@ -12,6 +12,7 @@ echo "=== ABBY startup $(date) ==="
 # SSH setup
 echo "[ssh] configuring..."
 apt-get install -y -q openssh-server 2>/dev/null || true
+ssh-keygen -A 2>/dev/null || true
 mkdir -p /root/.ssh /run/sshd
 if [ -n "$PUBLIC_KEY" ]; then
     echo "$PUBLIC_KEY" > /root/.ssh/authorized_keys
