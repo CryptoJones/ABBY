@@ -32,6 +32,9 @@ else
 fi
 
 # Install Python deps
+echo "[pip] upgrading pip..."
+pip install -q --upgrade pip
+
 echo "[pip] installing dependencies..."
 pip install -q \
     "transformers==4.44.2" \
