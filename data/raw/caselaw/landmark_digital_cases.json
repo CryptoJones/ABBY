@@ -1,0 +1,60 @@
+{
+  "landmark_cases": [
+    {
+      "case": "Riley v. California",
+      "year": 2014,
+      "citation": "573 U.S. 373",
+      "holding": "Warrant required to search cell phone incident to arrest",
+      "implication": "No cell phone search without warrant, regardless of arrest"
+    },
+    {
+      "case": "Carpenter v. United States",
+      "year": 2018,
+      "citation": "585 U.S. 296",
+      "holding": "Warrant required for historical CSLI (cell-site location information)",
+      "implication": "Third-party doctrine does not apply to CSLI spanning 7+ days"
+    },
+    {
+      "case": "United States v. Jones",
+      "year": 2012,
+      "citation": "565 U.S. 400",
+      "holding": "Attaching GPS tracker to vehicle is a Fourth Amendment search",
+      "implication": "Physical installation of tracking device requires warrant"
+    },
+    {
+      "case": "Kyllo v. United States",
+      "year": 2001,
+      "citation": "533 U.S. 27",
+      "holding": "Thermal imaging of home requires warrant",
+      "implication": "Technology revealing inside-home information = search"
+    },
+    {
+      "case": "United States v. Warshak",
+      "year": 2010,
+      "citation": "631 F.3d 266",
+      "holding": "Warrant required for email content (6th Circuit)",
+      "implication": "Email has reasonable expectation of privacy; SCA compelled disclosure = 4th Am. violation"
+    },
+    {
+      "case": "Katz v. United States",
+      "year": 1967,
+      "citation": "389 U.S. 347",
+      "holding": "Fourth Amendment protects people, not places; reasonable expectation of privacy test",
+      "implication": "Foundational test for all electronic surveillance"
+    },
+    {
+      "case": "Smith v. Maryland",
+      "year": 1979,
+      "citation": "442 U.S. 735",
+      "holding": "No REP in numbers dialed (pen register); third-party doctrine",
+      "implication": "Basis for SCA pen register provisions \u2014 but see Carpenter"
+    },
+    {
+      "case": "United States v. Davis",
+      "year": 2015,
+      "citation": "785 F.3d 498",
+      "holding": "11th Circuit: historical CSLI obtainable with D-order (pre-Carpenter)",
+      "implication": "Superseded by Carpenter for federal investigations"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "landmark_cases": [
+    {
+      "case": "Daubert v. Merrell Dow Pharmaceuticals",
+      "year": 1993,
+      "citation": "509 U.S. 579",
+      "holding": "Federal courts must gate expert testimony for scientific validity (Daubert standard)",
+      "implication": "All forensic methodology must satisfy: testability, peer review, error rate, general acceptance"
+    },
+    {
+      "case": "Kumho Tire Co. v. Carmichael",
+      "year": 1999,
+      "citation": "526 U.S. 137",
+      "holding": "Daubert applies to all expert testimony, not just scientific",
+      "implication": "Forensic experts must satisfy Daubert regardless of discipline"
+    },
+    {
+      "case": "Frye v. United States",
+      "year": 1923,
+      "citation": "293 F. 1013",
+      "holding": "Expert testimony must be based on generally accepted scientific method",
+      "implication": "Still controlling in some states (CA, NY, FL, WA, IL); Daubert controls in federal courts"
+    },
+    {
+      "case": "Maryland v. King",
+      "year": 2013,
+      "citation": "569 U.S. 435",
+      "holding": "DNA swab at arrest is reasonable search (identification purpose)",
+      "implication": "Arrestee DNA collection without warrant upheld"
+    },
+    {
+      "case": "District Attorney's Office v. Osborne",
+      "year": 2009,
+      "citation": "557 U.S. 52",
+      "holding": "No constitutional right to post-conviction DNA testing",
+      "implication": "Access to biological evidence post-conviction governed by state law"
+    },
+    {
+      "case": "United States v. Llera Plaza",
+      "year": 2002,
+      "citation": "188 F. Supp. 2d 549",
+      "holding": "Fingerprint comparison testimony limited after Daubert challenge (later reversed)",
+      "implication": "ACE-V methodology must be documented; examiner must explain error rate"
+    }
+  ]
+}

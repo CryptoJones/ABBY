@@ -1,0 +1,162 @@
+{
+  "statutes": [
+    {
+      "usc": "18 U.S.C. \u00a7 2252",
+      "title": "Certain activities relating to material involving sexual exploitation of minors",
+      "elements": [
+        "Knowing transportation, receipt, distribution, or possession",
+        "Visual depiction of minor engaged in sexually explicit conduct",
+        "Interstate or foreign commerce, or computer"
+      ],
+      "mandatory_minimum": "5 years (receipt/distribution); 10 years (repeat)",
+      "investigation_notes": "Hash matching (PhotoDNA) commonly used for possession/distribution; P2P network monitoring standard"
+    },
+    {
+      "usc": "18 U.S.C. \u00a7 2256",
+      "title": "Definitions \u2014 child pornography",
+      "elements": [
+        "Minor = under 18",
+        "Sexually explicit conduct defined",
+        "Visual depiction includes digital/electronic means"
+      ],
+      "investigation_notes": "Definition section \u2014 critical for charging; covers AI-generated CSAM post-PROTECT Act"
+    },
+    {
+      "usc": "18 U.S.C. \u00a7 2258A",
+      "title": "Reporting requirements of electronic service providers (CyberTipline)",
+      "elements": [
+        "ESP must report apparent CSAM to NCMEC CyberTipline",
+        "Must preserve evidence 90 days pending law enforcement request",
+        "Location data and IP address required in report"
+      ],
+      "investigation_notes": "CyberTipline reports from NCMEC are primary investigative lead; must be corroborated before warrant application"
+    },
+    {
+      "usc": "18 U.S.C. \u00a7 2422",
+      "title": "Coercion and enticement",
+      "elements": [
+        "Use of interstate commerce (internet, phone)",
+        "Persuade, induce, entice, or coerce",
+        "Individual under 18 to engage in sexual activity"
+      ],
+      "investigation_notes": "Online undercover operations \u2014 agent posing as minor; jurisdiction established by interstate communication"
+    },
+    {
+      "usc": "18 U.S.C. \u00a7 2423",
+      "title": "Transportation of minors",
+      "elements": [
+        "Transportation of minor in interstate/foreign commerce",
+        "With intent minor engage in sexual activity"
+      ],
+      "investigation_notes": "Travel element key; sting operations \u2014 defendant need not actually travel to complete offense"
+    }
+  ],
+  "methodology": {
+    "description": "CSAM investigation methodology standards \u2014 training signal for ABBY",
+    "phases": [
+      {
+        "phase": "Initial Lead Development",
+        "sources": [
+          "NCMEC CyberTipline report",
+          "P2P network monitoring (ICAC)",
+          "Undercover operations",
+          "Parental/victim report"
+        ],
+        "documentation": [
+          "CyberTip report number",
+          "IP address and timestamp",
+          "Hash values of reported images",
+          "ESP account information"
+        ],
+        "legal_notes": "CyberTip alone not sufficient for probable cause; must independently corroborate IP-to-subscriber link"
+      },
+      {
+        "phase": "Subpoena / Legal Process",
+        "sources": [
+          "ISP subscriber records (18 U.S.C. \u00a7 2703(c) \u2014 administrative subpoena)",
+          "ESP account records",
+          "IP geolocation"
+        ],
+        "documentation": [
+          "Preservation letter sent immediately",
+          "Return of subpoena with subscriber info",
+          "Chain from CyberTip IP to physical address"
+        ],
+        "legal_notes": "Subscriber info = \u00a7 2703(c) subpoena; content requires warrant; Carpenter applies to historical location"
+      },
+      {
+        "phase": "Search Warrant Application",
+        "sources": [
+          "Affidavit incorporating CyberTip + ISP return + corroboration"
+        ],
+        "documentation": [
+          "Probable cause affidavit",
+          "Description of items to be seized (devices, storage media)",
+          "Nexus between device and CSAM"
+        ],
+        "legal_notes": "Must establish nexus between residence/device and CSAM; collectors tend to retain material (staleness less of an issue); particularity required for digital devices \u2014 see Ybarra v. Illinois"
+      },
+      {
+        "phase": "Evidence Seizure",
+        "sources": [
+          "On-site triage (if authorized)",
+          "All digital devices, storage media, gaming consoles, smart devices"
+        ],
+        "documentation": [
+          "Evidence receipt",
+          "Photograph in place before seizure",
+          "Serial numbers documented",
+          "Chain of custody initiated at scene"
+        ],
+        "legal_notes": "Plain view doctrine applies to observed CSAM during lawful search; scope of warrant governs what may be seized"
+      },
+      {
+        "phase": "Forensic Examination",
+        "tools": [
+          "Cellebrite UFED (mobile)",
+          "FTK / EnCase / Autopsy (computers)",
+          "PhotoDNA hash matching",
+          "Internet Evidence Finder (IEF/AXIOM)"
+        ],
+        "methodology": [
+          "Write-block and hash before examination",
+          "Hash compare known CSAM databases (NCMEC, IWF, Project VIC)",
+          "Document file metadata (creation, access, modification)",
+          "Recover deleted files"
+        ],
+        "documentation": [
+          "Examination request form",
+          "Hash verification log",
+          "PhotoDNA match report",
+          "Chain-of-custody maintained throughout"
+        ],
+        "legal_notes": "Hash matching to known CSAM databases provides probable cause and corroboration; examiner must be prepared to testify to methodology"
+      },
+      {
+        "phase": "Victim Identification",
+        "sources": [
+          "NCMEC Project VICT",
+          "Interpol ICSE database",
+          "FBI CETS"
+        ],
+        "documentation": [
+          "Submission of unidentified victim images to NCMEC",
+          "Coordination with ICAC task force"
+        ],
+        "legal_notes": "Victim identification is separate investigative obligation; examiners should submit unknown victims even if charging is complete"
+      }
+    ],
+    "hash_matching": {
+      "description": "PhotoDNA and hash-based CSAM identification",
+      "tools": [
+        "Microsoft PhotoDNA",
+        "Project VIC International VICS hash database",
+        "NCMEC hash database",
+        "IWF (Internet Watch Foundation)"
+      ],
+      "evidentiary_value": "Hash match to known CSAM database is strong corroborating evidence; not conclusive \u2014 must view matched file to confirm",
+      "court_acceptance": "Widely accepted; examiner must explain hash matching in plain terms; defense may challenge false positive rate",
+      "daubert_notes": "PhotoDNA has published error rate; methodology peer reviewed; generally accepted in forensic community"
+    }
+  }
+}

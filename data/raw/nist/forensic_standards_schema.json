@@ -1,0 +1,89 @@
+{
+  "description": "Key forensic science standards and their evidentiary implications \u2014 training signal for ABBY",
+  "digital_forensics": [
+    {
+      "discipline": "Computer Forensics \u2014 Disk Imaging",
+      "standard": "NIST SP 800-86",
+      "requirement": "Forensic duplicate (bit-for-bit copy) with write blocker; hash verification (MD5 + SHA-256) before and after",
+      "tools": [
+        "FTK Imager",
+        "dd",
+        "dcfldd",
+        "Guymager"
+      ],
+      "court_acceptance": "Well-established; examiner must testify to write-blocker use and hash match",
+      "defense_challenges": [
+        "Hash mismatch",
+        "No write blocker documented",
+        "Continuity gap"
+      ]
+    },
+    {
+      "discipline": "Mobile Device Forensics",
+      "standard": "NIST SP 800-101 Rev 1",
+      "requirement": "Isolate device from network (Faraday bag) immediately; document screen state; select acquisition level (logical/physical/chip-off) based on lock state",
+      "tools": [
+        "Cellebrite UFED",
+        "AXIOM",
+        "Oxygen Forensics",
+        "GrayKey"
+      ],
+      "court_acceptance": "Cellebrite and AXIOM widely accepted; chip-off methodology requires expert explanation",
+      "defense_challenges": [
+        "Faraday failure (remote wipe)",
+        "Timestamp attribution",
+        "Tool reliability (Daubert)"
+      ]
+    },
+    {
+      "discipline": "Cloud Evidence",
+      "standard": "SCA (18 U.S.C. \u00a7\u00a7 2701-2713); ECPA",
+      "requirement": "Legal process required (subpoena for subscriber info; warrant for content); preservation letter under 18 U.S.C. \u00a7 2703(f) issued immediately",
+      "tools": [
+        "Provider law enforcement portals",
+        "MLAT for foreign providers"
+      ],
+      "court_acceptance": "Legal process compliance is mandatory; Carpenter applies to content",
+      "defense_challenges": [
+        "Warrant requirement",
+        "Third-party provider authentication",
+        "Data integrity"
+      ]
+    }
+  ],
+  "physical_evidence": [
+    {
+      "discipline": "Fingerprint Examination",
+      "standard": "SWGFAST; FBI Quality Standards",
+      "requirement": "Document in situ before collection; use appropriate development technique for substrate; AFIS comparison followed by human verification",
+      "court_acceptance": "Universally accepted when ACE-V methodology followed",
+      "defense_challenges": [
+        "Partial print reliability",
+        "Examiner bias",
+        "AFIS false positive rate"
+      ]
+    },
+    {
+      "discipline": "DNA Evidence",
+      "standard": "SWGDAM; FBI Quality Assurance Standards",
+      "requirement": "Separate collection of each sample; prevent cross-contamination; cold storage; CODIS-compatible STR profiling",
+      "court_acceptance": "Highest scientific acceptance; mixture interpretation increasingly challenged",
+      "defense_challenges": [
+        "Mixed profiles",
+        "Low-template DNA",
+        "Lab contamination",
+        "Touch DNA limitations"
+      ]
+    },
+    {
+      "discipline": "Ballistics / Firearms",
+      "standard": "SWGGUN; NIBIN protocols",
+      "requirement": "Photograph in place; test fire for comparison; NIBIN entry within 48 hours for operational leads",
+      "court_acceptance": "Accepted; NRC 2009 report raised concerns about subjective comparison",
+      "defense_challenges": [
+        "Subjectivity of toolmark comparison",
+        "Error rate disclosure"
+      ]
+    }
+  ]
+}
