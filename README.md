@@ -20,9 +20,9 @@ python3 assets/banner.py
 ABBY is community-funded. Every contribution keeps this project free, open, and in the hands
 of the forensic examiners and investigators who need it most.
 
-|| Donor | Amount | Note |
-||---|---|---|
-|| Ronin 48, LLC | N/A | Founding donor |
+| Donor | Amount | Note |
+|---|---|---|
+| Ronin 48, LLC | N/A | Founding donor |
 
 *Want to support ABBY? Reach out to the maintainers.*
 
