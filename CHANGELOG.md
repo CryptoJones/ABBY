@@ -1,6 +1,8 @@
 # ABBY Changelog
 
-## [v0.1.0-dev] — In Development (Started 2026-05-12)
+## [v0.1.1-dev] — 2026-05-12
+
+## [v0.1.0-dev] — 2026-05-12 (Initial scaffold)
 
 **Status:** ⏳ Data collection and training pipeline in progress
 

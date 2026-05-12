@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-Ronin48%2Fabby-yellow)](https://huggingface.co/Ronin48/abby)
-[![Version](https://img.shields.io/badge/version-v0.1.0--dev-orange)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-v0.1.1--dev-orange)](CHANGELOG.md)
 
 > *"I use my powers for good, not evil."*
 > — Abby Sciuto, *NCIS*
