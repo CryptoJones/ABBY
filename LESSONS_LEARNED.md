@@ -379,6 +379,46 @@ trainer = SFTTrainer(...)
 
 ---
 
+### 17. transformers Version Creep — `--upgrade` Overrides the Pin
+
+**Symptom:** The schema crash from errors #12 or #13 returns even though the pin is in
+`launch.sh`. Usually happens after manually running `pip install --upgrade bitsandbytes`
+or reconnecting and re-running pip commands without the full version constraint.
+
+**Cause:** Running `pip install --upgrade <any-package>` without the transformers pin
+can pull in transformers 5.x as a transitive dependency, overwriting the pinned version.
+
+**Fix:** Always reinstall the full pinned stack together:
+```bash
+pip install "transformers>=4.46.0,<4.50.0" "trl>=0.12.0,<1.0.0"
+```
+
+Then re-run training. Never run bare `pip install --upgrade transformers`.
+
+---
+
+### 18. Web Terminal Drops Kill the Training Process
+
+**Symptom:** RunPod web terminal disconnects after inactivity. Training process dies with it.
+
+**Cause:** The web terminal runs training as a foreground process in the shell session.
+When the browser disconnects, the shell exits and SIGHUP kills the process.
+
+**Fix:** Use `tmux`. Install it first (not included in the base image):
+```bash
+apt-get install -y tmux
+tmux new -s training
+# paste your training command here
+# Ctrl+B then D to detach — training keeps running
+```
+
+To reattach after reconnecting:
+```bash
+tmux attach -t training
+```
+
+---
+
 ## Package Versions That Work Together
 
 As of May 2026 on `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`:
