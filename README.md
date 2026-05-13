@@ -248,6 +248,14 @@ This software is provided "AS IS" without warranty of any kind.
 
 ---
 
+## Training Notes
+
+If you're training ABBY on RunPod or another GPU cloud provider, read [LESSONS_LEARNED.md](LESSONS_LEARNED.md)
+before you start. It documents every dependency conflict, environment bug, and hard-won fix
+from the first ABBY training run — along with the golden path that avoids all of it.
+
+---
+
 ## Contributing
 
 Contributions from certified forensic examiners, digital investigators, and legal professionals
