@@ -27,6 +27,7 @@ echo "Workspace: $WORKSPACE"
 
 # HuggingFace cache — always on the large volume, never the container disk
 export HF_HOME="${HF_HOME:-$WORKSPACE/hf_cache}"
+export HF_HUB_DISABLE_XET=1  # workaround for XET background writer crash on large model downloads
 
 # bitsandbytes CUDA 13 library (installed via pip nvidia packages)
 _nvidia_lib=$(python3 -c "import site; print(site.getsitepackages()[0])")/nvidia/cu13/lib
@@ -89,10 +90,10 @@ echo "=== $REPO_NAME training complete $(date) ==="
 
 # Upload adapter to HuggingFace
 ADAPTER_DIR="$REPO_DIR/output/abby-qlora/final"
-HF_REPO="Ronin48/abby-lora-adapter"
+HF_REPO="Ronin48LLC/abby-lora-adapter"
 if [ -d "$ADAPTER_DIR" ]; then
     echo "[upload] pushing adapter to $HF_REPO..."
-    huggingface-cli upload "$HF_REPO" "$ADAPTER_DIR" --token "$HF_TOKEN"
+    hf upload "$HF_REPO" "$ADAPTER_DIR" --token "$HF_TOKEN"
     echo "[upload] done: $HF_REPO"
 else
     echo "[upload] WARNING: adapter not found at $ADAPTER_DIR — upload manually"
