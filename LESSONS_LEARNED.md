@@ -242,22 +242,6 @@ HF_TOKEN=your_token bash <(curl -s https://codeberg.org/Ronin48/SELMA/raw/branch
 
 ---
 
-## Package Versions That Work Together
-
-As of May 2026 on the RunPod PyTorch 2.4 + CUDA 12.4 template:
-
-| Package | Constraint | Notes |
-|---|---|---|
-| transformers | latest | Must be unpinned — 4.44.2 conflicts with current bitsandbytes |
-| peft | latest | Must be unpinned — 0.12.0 imports removed transformers symbols |
-| trl | latest | Must be unpinned |
-| bitsandbytes | latest | Must be unpinned — old versions lack CUDA 13 binaries |
-| accelerate | latest | Must be unpinned |
-| torchvision | **uninstalled** | Incompatible with torch 2.4+ — remove it |
-| triton | torch-managed | Don't pin — let torch manage it |
-
----
-
 ### 11. bitsandbytes Custom Op Schema Error (PyTorch 2.4 + Python 3.11)
 
 **Error:**
@@ -350,6 +334,66 @@ _nvidia_lib=$(python3 -c "import site; print(site.getsitepackages()[0])")/nvidia
 ```
 
 This is now in all `scripts/launch.sh` files.
+
+---
+
+### 15. SFTTrainer `tokenizer` Renamed to `processing_class` (trl 0.12+)
+
+**Error:**
+```
+TypeError: SFTTrainer.__init__() got an unexpected keyword argument 'tokenizer'
+```
+
+**Cause:** trl 0.12 renamed the `tokenizer` parameter in `SFTTrainer.__init__()` to
+`processing_class` to support non-tokenizer processors.
+
+**Fix:** Replace `tokenizer=tokenizer` with `processing_class=tokenizer` in the
+`SFTTrainer(...)` call.
+
+---
+
+### 16. SFTTrainer `max_seq_length` Moved to `SFTConfig` (trl 0.12+)
+
+**Error:**
+```
+TypeError: SFTTrainer.__init__() got an unexpected keyword argument 'max_seq_length'
+```
+
+**Cause:** trl 0.12 moved `max_seq_length` out of `SFTTrainer` and into `SFTConfig`
+(a subclass of `TrainingArguments` that adds SFT-specific options).
+
+**Fix:** Replace `TrainingArguments` with `SFTConfig` and pass `max_seq_length` there:
+
+```python
+# Wrong (trl < 0.12):
+from transformers import TrainingArguments
+from trl import SFTTrainer
+training_args = TrainingArguments(output_dir=..., ...)
+trainer = SFTTrainer(..., max_seq_length=4096)
+
+# Right (trl >= 0.12):
+from trl import SFTConfig, SFTTrainer
+training_args = SFTConfig(max_seq_length=4096, output_dir=..., ...)
+trainer = SFTTrainer(...)
+```
+
+---
+
+## Package Versions That Work Together
+
+As of May 2026 on `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`:
+
+| Package | Pin | Reason |
+|---|---|---|
+| transformers | `>=4.46.0,<4.50.0` | 4.50+ adds MoE custom ops that crash on PyTorch 2.4 |
+| trl | `>=0.12.0,<1.0.0` | 1.0+ imports `is_trackio_available` from transformers>=4.50 |
+| peft | latest (`--upgrade`) | |
+| bitsandbytes | latest (`--upgrade`) | old versions lack CUDA 13 binaries |
+| accelerate | latest (`--upgrade`) | |
+| torchvision | **uninstalled** | Crashes on torch 2.4+ — remove it |
+| triton | torch-managed | Don't pin separately |
+
+These pins are baked into all `scripts/launch.sh` files.
 
 ---
 
