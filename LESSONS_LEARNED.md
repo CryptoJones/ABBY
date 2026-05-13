@@ -404,17 +404,24 @@ Then re-run training. Never run bare `pip install --upgrade transformers`.
 **Cause:** The web terminal runs training as a foreground process in the shell session.
 When the browser disconnects, the shell exits and SIGHUP kills the process.
 
-**Fix:** Use `tmux`. Install it first (not included in the base image):
+**Fix:** Use `nohup` to run the training process immune to terminal disconnects.
+`launch.sh` now does this automatically. If running manually:
 ```bash
-apt-get install -y tmux
-tmux new -s training
-# paste your training command here
-# Ctrl+B then D to detach — training keeps running
+nohup python scripts/training/train_qlora.py --config configs/training_config.yaml >> /workspace/logs/train.log 2>&1 &
 ```
 
-To reattach after reconnecting:
+Then follow progress with:
 ```bash
-tmux attach -t training
+tail -f /workspace/logs/train.log
+```
+
+If you want an interactive session that survives disconnects, install tmux first
+(not included in the base image) and use that instead:
+```bash
+apt-get install tmux
+tmux new -s training
+# run your command, then Ctrl+B + D to detach
+tmux attach -t training  # to reconnect
 ```
 
 ---
