@@ -277,7 +277,32 @@ pip install --upgrade bitsandbytes
 
 ---
 
-### 12. LD_LIBRARY_PATH Hardcoded to Python 3.10
+### 12. transformers MoE Custom Op Schema Error (transformers >= 4.50 + PyTorch 2.4)
+
+**Error:**
+```
+from .integrations.finegrained_fp8 import ALL_FP8_EXPERTS_FUNCTIONS
+...
+torch.library.custom_op("transformers::grouped_mm_fallback", _grouped_mm_fallback, mutates_args=())
+ValueError: infer_schema(func): Parameter input has unsupported type torch.Tensor.
+Got func with signature (input: 'torch.Tensor', weight: 'torch.Tensor', offs: 'torch.Tensor') -> 'torch.Tensor'
+```
+
+**Cause:** transformers 4.50+ added FP8/MoE expert integrations (`transformers/integrations/moe.py`)
+that register custom ops at import time. The functions use string-quoted type annotations
+(`'torch.Tensor'`) that PyTorch 2.4's `infer_schema` rejects. Same root cause as the
+bitsandbytes schema error (#11) but in transformers itself.
+
+**Fix:** Pin transformers below 4.50:
+```bash
+pip install "transformers>=4.46.0,<4.50.0"
+```
+
+This is now the pin used in all `scripts/launch.sh` files.
+
+---
+
+### 13. LD_LIBRARY_PATH Hardcoded to Python 3.10
 
 **Symptom:** bitsandbytes CUDA library not found on images using Python 3.11+.
 
