@@ -3,7 +3,7 @@
 **An Open-Source Model Trained for Law Enforcement Forensic Investigators**
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Ronin48%2Fabby-yellow)](https://huggingface.co/Ronin48/abby)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Ronin48LLC%2Fabby--lora--adapter-yellow)](https://huggingface.co/Ronin48LLC/abby-lora-adapter)
 [![Version](https://img.shields.io/badge/version-v0.1.1--dev-orange)](CHANGELOG.md)
 
 > *"I use my powers for good, not evil."*
@@ -23,6 +23,7 @@ of the forensic examiners and investigators who need it most.
 | Donor | Amount | Note |
 |---|---|---|
 | Ronin 48, LLC | N/A | Founding donor |
+| Anonymous | $50 | Thank you, Joe Sixpack |
 
 *Want to support ABBY? Reach out to the maintainers.*
 
@@ -157,19 +158,19 @@ Key Fourth Amendment digital standards ABBY is trained on:
 
 ### HuggingFace
 
-- **LoRA Adapter:** `Ronin48/abby-lora-adapter`
-- **Merged Model:** `Ronin48/abby-70b`
-- **Quantized (GGUF):** `Ronin48/abby-70b-GGUF` — for llama.cpp, LM Studio, Ollama
+- **LoRA Adapter:** `Ronin48LLC/abby-lora-adapter`
+- **Merged Model:** `Ronin48LLC/abby-70b` *(coming soon)*
+- **Quantized (GGUF):** `Ronin48LLC/abby-70b-GGUF` — for llama.cpp, LM Studio, Ollama *(coming soon)*
 
 ### Ollama
 
 ```bash
-ollama run Ronin48/abby
+ollama run Ronin48LLC/abby
 ```
 
 ### LM Studio
 
-Search for `Ronin48/abby` once GGUF weights are published to HuggingFace.
+Search for `Ronin48LLC/abby` once GGUF weights are published to HuggingFace.
 
 ---
 
@@ -269,3 +270,7 @@ are especially welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Base Model Weights:** Meta Llama 3.1 Community License. Fine-tuned adapter weights and
 all original ABBY contributions remain Apache 2.0.
+
+---
+
+Proudly Made in Nebraska. Go Big Red!
