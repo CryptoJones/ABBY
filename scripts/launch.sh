@@ -59,7 +59,7 @@ pip install -q --upgrade pip
 echo "[pip] installing dependencies..."
 # torchvision ships pre-built for older torch and breaks on torch 2.11+
 pip uninstall -q -y torchvision 2>/dev/null || true
-pip install -q \
+pip install -q --upgrade \
     "transformers" \
     "peft" \
     "trl" \
