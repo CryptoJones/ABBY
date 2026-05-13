@@ -19,9 +19,8 @@ from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
-    TrainingArguments,
 )
-from trl import SFTTrainer
+from trl import SFTConfig, SFTTrainer
 
 
 def load_config(config_path: str) -> dict:
@@ -89,7 +88,8 @@ def train(config: dict):
     train_dataset, eval_dataset = load_training_data(config)
     training_config = config["training"]
 
-    training_args = TrainingArguments(
+    training_args = SFTConfig(
+        max_seq_length=config["data"].get("max_seq_length", 4096),
         output_dir=training_config["output_dir"],
         num_train_epochs=training_config["num_train_epochs"],
         per_device_train_batch_size=training_config["per_device_train_batch_size"],
@@ -119,7 +119,6 @@ def train(config: dict):
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        max_seq_length=config["data"].get("max_seq_length", 4096),
     )
 
     print("\nStarting ABBY training...")
