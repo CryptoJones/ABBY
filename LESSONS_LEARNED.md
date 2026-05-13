@@ -258,6 +258,45 @@ As of May 2026 on the RunPod PyTorch 2.4 + CUDA 12.4 template:
 
 ---
 
+### 11. bitsandbytes Custom Op Schema Error (PyTorch 2.4 + Python 3.11)
+
+**Error:**
+```
+ValueError: infer_schema(func): Parameter input has unsupported type torch.Tensor.
+Got func with signature (input: 'torch.Tensor', weight: 'torch.Tensor', offs: 'torch.Tensor') -> 'torch.Tensor'
+```
+
+**Cause:** Older bitsandbytes versions used string-quoted type annotations (`'torch.Tensor'`)
+in custom op registrations. PyTorch 2.4's `infer_schema` rejects string annotations —
+it requires the actual `torch.Tensor` type object.
+
+**Fix:** Upgrade bitsandbytes to the latest version:
+```bash
+pip install --upgrade bitsandbytes
+```
+
+---
+
+### 12. LD_LIBRARY_PATH Hardcoded to Python 3.10
+
+**Symptom:** bitsandbytes CUDA library not found on images using Python 3.11+.
+
+**Cause:** `launch.sh` had a hardcoded path:
+`/usr/local/lib/python3.10/dist-packages/nvidia/cu13/lib`
+
+The `runpod/pytorch:2.4.0-py3.11-cuda12.4.1` image uses Python 3.11, so the path
+doesn't exist and the library is never added to `LD_LIBRARY_PATH`.
+
+**Fix:** Derive the path dynamically from Python's own site-packages:
+```bash
+_nvidia_lib=$(python3 -c "import site; print(site.getsitepackages()[0])")/nvidia/cu13/lib
+[ -d "$_nvidia_lib" ] && export LD_LIBRARY_PATH="$_nvidia_lib:${LD_LIBRARY_PATH:-}"
+```
+
+This is now in all `scripts/launch.sh` files.
+
+---
+
 ## Contributing
 
 If you hit a new error and fix it, please add it here. The people walking behind
