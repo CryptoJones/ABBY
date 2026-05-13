@@ -302,7 +302,38 @@ This is now the pin used in all `scripts/launch.sh` files.
 
 ---
 
-### 13. LD_LIBRARY_PATH Hardcoded to Python 3.10
+### 13. trl / transformers Version Sandwich (PyTorch 2.4)
+
+**Error:**
+```
+ImportError: cannot import name 'is_trackio_available' from 'transformers'
+RuntimeError: Failed to import trl.trainer.sft_trainer
+```
+
+**Cause:** trl>=1.0.0 imports `is_trackio_available` from transformers. That symbol only
+exists in transformers>=4.50. But transformers>=4.50 crashes on PyTorch 2.4 (see error #12).
+Pinning transformers<4.50 to fix error #12 therefore breaks trl>=1.0.0.
+
+**Fix:** Pin trl below 1.0.0 to match the transformers<4.50 constraint:
+```bash
+pip install "transformers>=4.46.0,<4.50.0" "trl>=0.12.0,<1.0.0"
+```
+
+The working version matrix for PyTorch 2.4 + CUDA 12.4:
+
+| Package | Pin | Reason |
+|---|---|---|
+| transformers | `>=4.46.0,<4.50.0` | 4.50+ has MoE custom_op crash on PyTorch 2.4 |
+| trl | `>=0.12.0,<1.0.0` | 1.0+ imports `is_trackio_available` from transformers>=4.50 |
+| bitsandbytes | latest (--upgrade) | older versions lack CUDA 13 binaries |
+| peft | latest (--upgrade) | |
+| accelerate | latest (--upgrade) | |
+
+These pins are now in all `scripts/launch.sh` files.
+
+---
+
+### 14. LD_LIBRARY_PATH Hardcoded to Python 3.10
 
 **Symptom:** bitsandbytes CUDA library not found on images using Python 3.11+.
 
