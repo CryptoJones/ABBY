@@ -2,8 +2,10 @@
 
 **An Open-Source Model Trained for Law Enforcement Forensic Investigators**
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Ronin48LLC%2Fabby--lora--adapter-yellow)](https://huggingface.co/Ronin48LLC/abby-lora-adapter)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?logo=apache)](https://opensource.org/licenses/Apache-2.0)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Ronin48LLC%2Fabby--lora--adapter-FFD21E?logo=huggingface&logoColor=000)](https://huggingface.co/Ronin48LLC/abby-lora-adapter)
+[![Codeberg](https://img.shields.io/badge/Codeberg-Ronin48%2FABBY-2185D0?logo=codeberg&logoColor=white)](https://codeberg.org/Ronin48/ABBY)
+[![GitHub](https://img.shields.io/badge/GitHub-CryptoJones%2FABBY-181717?logo=github&logoColor=white)](https://github.com/CryptoJones/ABBY)
 [![Version](https://img.shields.io/badge/version-v0.1.1--dev-orange)](CHANGELOG.md)
 
 > *"I use my powers for good, not evil."*
