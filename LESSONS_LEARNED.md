@@ -444,6 +444,68 @@ These pins are baked into all `scripts/launch.sh` files.
 
 ---
 
+---
+
+## Error 19: `huggingface-cli` deprecated — upload silently fails
+
+**Symptom:** After training completes, the upload step exits with a deprecation warning and no repo is created on HuggingFace. `Ronin48/xxx-lora-adapter` returns 404.
+
+**Cause:** `huggingface-cli` was deprecated and replaced by `hf`. The old binary no longer functions.
+
+**Fix:** Replace `huggingface-cli upload` with `hf upload` in all `scripts/launch.sh` files and in `training_monitor.py`. Same argument order.
+
+```bash
+# Wrong
+huggingface-cli upload "$HF_REPO" "$ADAPTER_DIR" --token "$HF_TOKEN"
+
+# Correct
+hf upload "$HF_REPO" "$ADAPTER_DIR" --token "$HF_TOKEN"
+```
+
+**Applied to:** ABBY, SELMA, BONES, BRUNO `scripts/launch.sh` and `SELMA/scripts/training_monitor.py`.
+
+---
+
+---
+
+### 20. Training Monitor Blind to Disk-Full Crashes — Happened 3 Times
+
+**Symptom:** Monitor reports `GPU 0% | active=False` indefinitely. Training never starts.
+Claude says "hasn't kicked off yet" or "waiting to start." Pod burns credits doing nothing.
+User eventually tells Claude to SSH in. Crash is discovered.
+
+**Cause — two separate bugs that compound each other:**
+
+1. **Wrong volume size.** Llama-3.3-70B needs ~140 GB just for model weights (30 shards × ~4.7 GB).
+   A 100 GB volume fills at shard 22/30 with `OSError: [Errno 28] No space left on device`.
+   This kills the process before the GPU is ever touched. See also Error #8.
+
+2. **Wrong cache mount.** If `HF_HOME` is not explicitly set, HuggingFace defaults to
+   `~/.cache/huggingface` on the **container disk** (~40 GB), not the network volume.
+   The model download fills the container disk in minutes. GPU never activates.
+   See also Error #10.
+
+3. **Monitor was blind to this failure mode.** The monitor only detected *completion*
+   (GPU goes active → idle). It had no detection for the case where GPU *never* activates.
+   `GPU 0% | active=False` with a pod that's been up 45+ minutes is a crashed pod, not
+   a pod that's still initializing.
+
+**This happened three times before the monitor was fixed.**
+
+**Fixes applied:**
+- `ADAPTERS` config now has `min_disk_gb` per model (BONES/BRUNO = 200 GB, ABBY/SELMA = 80 GB)
+- Monitor runs a pre-flight check the first time it sees each pod:
+  - Verifies `volumeInGb >= min_disk_gb` via RunPod API
+  - SSHs in and checks `$HF_HOME` points to `/workspace`, not `~/.cache`
+  - Checks current free space on `/workspace`
+- If pod has been up ≥ 45 minutes with GPU never active: Telegram alert, not silence
+- Mid-training: polls `df /workspace` every cycle, alerts at 85% full
+
+**Rule: `GPU 0% | active=False` after 20+ minutes means crashed, not waiting.**
+SSH in immediately and check `/workspace/logs/train.log`. Do not tell anyone "it hasn't started yet."
+
+---
+
 ## Contributing
 
 If you hit a new error and fix it, please add it here. The people walking behind
